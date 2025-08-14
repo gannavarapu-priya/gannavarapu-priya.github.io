@@ -1,0 +1,1157 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>Priyanka Gannavarapu · Slides Portfolio</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+  <script src="https://unpkg.com/typewriter-effect@latest/dist/core.js"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          fontFamily: { sans: ['Inter','ui-sans-serif','system-ui'] },
+          colors: {
+            night: { 900:'#0a0f1a', 850:'#0b1120', 800:'#0e1530', 750:'#0f1838', 700:'#111b44' },
+            accent: { 300:'#a5b4fc', 400:'#818cf8', 500:'#6366f1', 600:'#4f46e5' }
+          },
+          boxShadow: { soft:'0 14px 48px -12px rgba(2,6,23,.55)' }
+        }
+      }
+    }
+  </script>
+  <style>
+  html, body { height:100%; }
+
+  /* LIGHT (default) */
+  body{
+    background:
+      radial-gradient(1200px 800px at 20% -10%, rgba(99,102,241,.10), transparent 60%),
+      #f8fafc;              /* slate-50 */
+    color:#0f172a;          /* slate-900 */
+  }
+
+  .slides { height:100vh; overflow-y:auto; scroll-snap-type:y mandatory; scroll-behavior:smooth; }
+  .slide  { height:100vh; scroll-snap-align:start; display:flex; align-items:center; }
+
+  /* Cards */
+  .card{
+    background:#ffffffcc;   /* translucent white */
+    border:1px solid #e2e8f0;/* slate-200 */
+    backdrop-filter: blur(6px);
+  }
+
+  /* Chips */
+  .chip{
+    background:#eef2ff;     /* indigo-50 */
+    border:1px solid #c7d2fe;/* indigo-200 */
+    color:#334155;          /* slate-600 */
+  }
+
+  .dot{ width:10px; height:10px; border-radius:9999px; background:#94a3b8; } /* slate-400 */
+  .dot.active{ background:#818cf8; transform:scale(1.2); }
+
+  .navglass{
+    backdrop-filter: blur(10px);
+    background: rgba(248,250,252,.75); /* slate-50 */
+    border:1px solid #e2e8f0;
+  }
+
+  .section-title { letter-spacing:.3px }
+
+  .icon-btn{
+    width:44px; height:44px; display:grid; place-items:center;
+    border-radius:12px;
+    border:1px solid #e2e8f0;
+    background:#ffffff;
+    color:#0f172a;
+  }
+  .icon-btn:hover{
+    border-color:#a5b4fc;  /* indigo-300 */
+    box-shadow:0 6px 22px -6px rgba(99,102,241,.25);
+    color:#3730a3;
+  }
+
+  /* DARK overrides */
+  .dark body{
+    background:
+      radial-gradient(1200px 800px at 20% -10%, rgba(99,102,241,.18), transparent 60%),
+      #0b1120;
+    color:#e5e7eb;
+  }
+  .dark .card{
+    background: rgba(255,255,255,.04);
+    border:1px solid rgba(255,255,255,.08);
+  }
+  .dark .chip{
+    background: rgba(99,102,241,.12);
+    border:1px solid rgba(99,102,241,.25);
+    color:#c7d2fe;
+  }
+  .dark .navglass{
+    background: rgba(11,17,32,.6);
+    border:1px solid rgba(255,255,255,.08);
+  }
+  .dark .dot{ background:#334155; }
+  .dark .icon-btn{
+    border-color: rgba(255,255,255,.12);
+    background: rgba(255,255,255,.04);
+    color:#e5e7eb;
+  }
+  /* ==== Skills tiles ==== */
+  .skill-grid { grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 1.25rem; }
+
+  .skill-card{
+	border-radius: 14px;
+	background: var(--sk-bg, #ffffffcc);
+	border: 1px solid var(--sk-bd, #e2e8f0);
+	padding: 1.25rem;
+	box-shadow: 0 10px 30px -12px rgba(2,6,23,.18);
+	transition: transform .2s ease, box-shadow .2s ease, border-color .2s ease;
+  }
+  .skill-card:hover{ transform: translateY(-2px); box-shadow: 0 16px 40px -16px rgba(2,6,23,.25); border-color:#c7d2fe; }
+  .skill-icon{ font-size: 2rem; margin-bottom:.75rem; }
+  .skill-title{ font-weight:700; letter-spacing:.2px; }
+  /* glow underline */
+  .skill-glow{
+	height: 6px; width: 60%;
+	margin: .6rem auto 0;
+	border-radius:9999px;
+	background: radial-gradient(16px 8px at 50% 50%, rgba(99,102,241,.7), rgba(99,102,241,.15) 60%, transparent 70%);
+	filter: blur(.2px);
+  }
+  /* dark-mode tweaks via CSS variables */
+  .dark .skill-card{ --sk-bg: rgba(255,255,255,.04); --sk-bd: rgba(255,255,255,.08); }
+  <style>
+  /* existing styles */
+
+  /* Let the Projects slide grow naturally instead of being forced to 100vh centered */
+  .slide.flow {
+    display: block;          
+    height: auto;            
+    min-height: 100vh;       
+    padding-top: 6rem;       
+    padding-bottom: 3rem;    
+  }
+
+  /* Prevent the header from covering the Projects anchor when jumping via nav */
+  #projects {
+    scroll-margin-top: 96px;
+  }
+</style>
+</style>
+</head>
+<body class="font-sans antialiased">
+  <!-- Top bar -->
+  <header class="fixed top-0 inset-x-0 z-40 navglass">
+    <div class="max-w-7xl mx-auto px-4 py-3 flex items-center justify-between">
+      <a href="#" class="text-lg font-bold">Priyanka Gannavarapu</a>
+      <nav class="hidden md:flex items-center gap-6 text-sm">
+        <a href="#home" class="hover:text-accent-400">Home</a>
+        <a href="#projects" class="hover:text-accent-400">Projects</a>
+        <a href="#skills" class="hover:text-accent-400">Skills</a>
+        <a href="#experience" class="hover:text-accent-400">Experience</a>
+        <a href="#education" class="hover:text-accent-400">Education</a>
+        <a href="#certifications" class="hover:text-accent-400">Certifications</a>
+      </nav>
+      <button id="themeToggle" class="p-2 rounded-lg hover:bg-white/5" aria-label="Toggle theme">
+		<i id="icon-sun" class="fa-solid fa-sun hidden"></i>
+		<i id="icon-moon" class="fa-solid fa-moon"></i>
+	  </button>
+
+    </div>
+  </header>
+
+  <!-- Dots navigation -->
+  <aside class="fixed right-4 md:right-6 top-1/2 -translate-y-1/2 z-40 flex flex-col gap-3">
+    <button class="dot" data-goto="home" aria-label="Home"></button>
+    <button class="dot" data-goto="projects" aria-label="Projects"></button>
+    <button class="dot" data-goto="skills" aria-label="Skills"></button>
+    <button class="dot" data-goto="experience" aria-label="Experience"></button>
+    <button class="dot" data-goto="education" aria-label="Education"></button>
+    <button class="dot" data-goto="certifications" aria-label="Certifications"></button>
+  </aside>
+
+  <!-- Prev/Next arrows (bottom-left) -->
+<div class="fixed bottom-6 left-6 z-40 flex flex-col gap-2">
+  <button id="prev"
+          class="w-11 h-11 grid place-items-center rounded-full navglass hover:text-accent-300"
+          title="Previous section" aria-label="Previous section">
+    <i class="fa-solid fa-arrow-up"></i>
+  </button>
+  <button id="next"
+          class="w-11 h-11 grid place-items-center rounded-full navglass hover:text-accent-300"
+          title="Next section" aria-label="Next section">
+    <i class="fa-solid fa-arrow-down"></i>
+  </button>
+</div>
+
+
+  <!-- Slides container -->
+  <div id="slides" class="slides snap-y">
+    <!-- Slide 1: Home -->
+    <section id="home" class="slide">
+      <div class="max-w-7xl mx-auto px-4 grid md:grid-cols-2 gap-10 items-center">
+        <div>
+          <p class="text-xs uppercase tracking-wider text-indigo-700 dark:text-accent-400/80 font-semibold"> SQL · PYTHON · EXCEL · AWS </p>
+          <h1 class="mt-2 text-5xl font-extrabold text-slate-900 dark:text-white"> Priyanka Gannavarapu </h1>
+          <p class="mt-4 text-4xl text-slate-900 dark:text-slate-300"> I am a <span id="typewriter" class="text-4xl font-bold underline decoration-accent-500"></span> </p>
+          <p class="mt-3 max-w-xl text-slate-700 dark:text-slate-300/90"> I design reliable data pipelines, analyze complex processes, and turn messy datasets into clear, actionable insights. </p>
+          <div class="mt-6 flex items-center gap-3">
+            <a class="icon-btn" href="mailto:gannavarapup.11@gmail.com" aria-label="Email"><i class="fa-solid fa-envelope text-lg"></i></a>
+            <a class="icon-btn" href="https://www.linkedin.com/in/priyanka-gannavarapu" target="_blank" aria-label="LinkedIn"><i class="fa-brands fa-linkedin-in text-lg"></i></a>
+            <a class="icon-btn" href="https://github.com/gannavarapu-priya" target="_blank" aria-label="GitHub"><i class="fa-brands fa-github text-lg"></i></a>
+          </div>
+        </div>
+        <!-- Photo on right -->
+        <div class="flex items-center justify-center">
+          <div class="relative">
+            <div class="absolute -inset-1 rounded-full bg-gradient-to-br from-accent-600/30 to-transparent blur-xl"></div>
+            <img src="IMG_6772.jpg"
+     style="object-position: 50% 20%;"
+     class="relative h-64 w-64 md:h-80 md:w-80 rounded-full object-cover ring-4 ring-indigo-900/40 shadow-soft">
+          </div>
+        </div>
+      </div>
+    </section>
+
+<!-- Slide 2: Projects (3 per page, rotating, search, bubble icons) -->
+<section id="projects" class="slide flow">
+  <div class="max-w-7xl mx-auto px-6">
+    <!-- Header row -->
+    <div class="flex items-center justify-between mb-6">
+      <h2 class="text-3xl md:text-4xl font-extrabold section-title">Projects</h2>
+
+      <!-- Search -->
+      <label class="relative w-full max-w-xs">
+        <input
+          id="projectSearch"
+          type="text"
+          placeholder="Search projects..."
+          class="w-full rounded-xl border border-slate-300/60 bg-white/90 pl-10 pr-3 py-2 text-sm
+                 placeholder-slate-400 shadow-sm
+                 focus:outline-none focus:ring-2 focus:ring-indigo-400 focus:border-indigo-400
+                 dark:bg-slate-800 dark:text-slate-100 dark:border-white/10 dark:placeholder-slate-400" />
+        <i class="fa-solid fa-magnifying-glass absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 dark:text-slate-500"></i>
+      </label>
+    </div>
+
+    <!-- Viewport (keeps grid inside, adds side padding like Experience) -->
+    <div id="projectsViewport" class="relative overflow-hidden rounded-2xl pb-4">
+      <!-- Grid (cards render here) -->
+      <div id="projectsGrid"
+           class="projects-container grid grid-cols-1 lg:grid-cols-3 gap-8 px-1 md:px-2 xl:px-6">
+      </div>
+
+      <!-- Pager -->
+      <div class="relative mt-6 flex items-center justify-center gap-3 z-20">
+        <button id="projPrev"
+                class="rounded-full border px-3 py-2 text-xs
+                       border-slate-300/60 bg-white/90 text-slate-700 hover:bg-white
+                       dark:border-white/10 dark:bg-slate-800 dark:text-slate-200 dark:hover:bg-slate-700"
+                aria-label="Previous page">
+          <i class="fa-solid fa-chevron-left"></i>
+        </button>
+
+        <!-- Page dots -->
+        <div id="projectsDots" class="flex items-center justify-center gap-2"></div>
+
+        <button id="projNext"
+                class="rounded-full border px-3 py-2 text-xs
+                       border-slate-300/60 bg-white/90 text-slate-700 hover:bg-white
+                       dark:border-white/10 dark:bg-slate-800 dark:text-slate-200 dark:hover:bg-slate-700"
+                aria-label="Next page">
+          <i class="fa-solid fa-chevron-right"></i>
+        </button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  /* Page dots */
+  .page-dot{width:10px;height:10px;border-radius:9999px;background:#c7d2fe;opacity:.45;transition:.2s}
+  .page-dot.active{background:#818cf8;opacity:1;transform:scale(1.15)}
+  /* Make pager always clickable above anything else */
+  #projectsDots, #projPrev, #projNext { position: relative; z-index: 30; }
+
+  /* Keep card width similar to Experience section proportions */
+  @media (min-width:1024px){
+    #projectsGrid > article { max-width: 720px; }
+  }
+
+  /* Slide-in animation */
+  .slide-in { animation: slideIn .35s ease-out both; }
+  @keyframes slideIn {
+    from { opacity:0; transform: translateY(8px); }
+    to   { opacity:1; transform: translateY(0); }
+  }
+
+  /* Bulleted lists inside project cards */
+  .projects-container ul { list-style: disc; margin-left: 1rem; }
+  .projects-container li { margin: 0.25rem 0; }
+</style>
+
+<script>
+  /* ---------------- YOUR PROJECTS (all 10) ---------------- */
+  const ALL_PROJECTS = [
+    {
+      title: "Space X Falcon 9 Landing Prediction",
+      blurb: [
+        "Project Goal: Predicted the success of Falcon 9 first-stage booster landings and extracted operational insights from historical SpaceX launch data.",
+        "Data & Methods: Collected and processed data from SpaceX/NASA APIs, web scraping, and manual research; performed cleaning, transformation, and feature engineering.",
+        "Analysis & Modeling: Applied SQL, Python visualizations, and Logistic Regression, SVM, and Decision Tree models with GridSearchCV for optimal performance.",
+        "Results & Impact: Identified payload mass, orbit type, and launch site as key predictors, achieving ~90% accuracy and providing actionable mission planning insights."
+      ],
+      tags: ["Python","Machine Learning","SQL","Data Visualization","APIs","Predictive Analytics"],
+      icon: "fa-rocket",
+      link: "#"
+    },
+    {
+      title: "Brain Tumor Diagnosis",
+      blurb: [
+        "Project Goal: Developed an automated MRI-based brain tumor detection and classification system to improve diagnostic speed and accuracy.",
+        "Data & Methods: Processed 7,022 MRI scans from the Br35H dataset with resizing, normalization, and U-Net segmentation for tumor localization.",
+        "Analysis & Modeling: Trained CNN, VGG19, ResNet50, and U-Net architectures, overcoming vanishing gradients with residual learning.",
+        "Results & Impact: Achieved peak accuracy of 99.65% (VGG19) and improved localization precision, enabling reliable multi-class tumor diagnosis."
+      ],
+      tags: ["Deep Learning","Medical Imaging","Image Segmentation","CNN","VGG-19","U-Net","ResNet"],
+      icon: "fa-brain",
+      link: "#"
+    },
+    {
+      title: "Fake News Detection",
+      blurb: [
+        "Project Goal: Built a machine learning–based NLP system to classify news articles as real or fake for combating misinformation.",
+        "Data & Methods: Used Kaggle’s dataset of 5,200 labeled articles; performed tokenization, stopword removal, lemmatization, and TF-IDF vectorization with uni- and bi-grams.",
+        "Analysis & Modeling: Trained Random Forest and GBM models; developed visualizations and an interactive GUI for real-time predictions.",
+        "Results & Impact: Achieved 96% accuracy, improving detection reliability and model interpretability."
+      ],
+      tags: ["NLP","Machine Learning","TF-IDF","Text Classification","Random Forest"],
+      icon: "fa-newspaper",
+      link: "#"
+    },
+    {
+      title: "NYC Taxi Trip Duration Prediction",
+      blurb: [
+        "Project Goal: Predicted NYC taxi trip durations to support urban mobility planning and fare estimation.",
+        "Data & Methods: Cleaned and preprocessed 1.4M+ trip records; engineered spatio-temporal features from pickup/dropoff coordinates and time trends.",
+        "Analysis & Modeling: Applied Random Forest, GBM, and SVM with hyperparameter tuning; visualized spatial and temporal travel patterns.",
+        "Results & Impact: Improved trip time accuracy by 12% (MAE 120seconds, RMSE 210seconds) and delivered insights through a Python Tkinter GUI."
+      ],
+      tags: ["Machine Learning","Feature Engineering","XGBoost","GUI Development","Spatio-Temporal Analysis"],
+      icon: "fa-car",
+      link: "#"
+    },
+    {
+      title: "Airline Customer Satisfaction Analysis",
+      blurb: [
+        "Project Goal: Identified factors influencing airline customer satisfaction and predicted service reuse likelihood.",
+        "Data & Methods: Preprocessed a large airline customer dataset in R; handled missing values with imputation and applied feature encoding.",
+        "Analysis & Modeling: Conducted t-tests and hypothesis testing; built and compared Logistic Regression and Decision Tree models.",
+        "Results & Impact: Delivered insights to improve customer experience and informed targeted service enhancement strategies."
+      ],
+      tags: ["R Programming","Statistical Analysis","Logistic Regression","Decision Tree","Customer Analytics"],
+      icon: "fa-plane",
+      link: "#"
+    },
+    {
+      title: "Car Data Insights Dashboard",
+      blurb: [
+        "Project Goal: Built an interactive D3.js dashboard to visualize historical car data, enabling exploration of performance, efficiency, and market trends across multiple dimensions.",
+        "Data Preparation & Design: Cleaned and normalized the a1-cars dataset (1970s–1980s), selected optimal visualization types, and applied IEEE VIS 2023 heuristics for usability and accessibility.",
+        "Visualizations & Interactivity: Developed Parallel Coordinates, Line, Scatter, and Bar Charts with brushing, zooming, tooltips, legend filters, and coordinated views for deep, multi-perspective analysis.",
+        "Deployment & Impact: Deployed via GitHub Pages for universal browser access, providing analysts, engineers, and policymakers with a responsive, insight-driven automotive data exploration tool."
+      ],
+	  tags: ["D3.js","Data Visualization","Interactive Dashboard","Automotive Analytics","Web Development"],
+      icon: "fa-car",
+      link: "#"
+    },
+    {
+      title: "Neural Network Performance: MNIST",
+      blurb: [
+        "Project Goal: Compared the performance of original and extended neural network architectures on the MNIST digit classification task to identify improvements in learning capacity.",
+        "Model Enhancement: Added an extra hidden layer with 128 neurons (ReLU activation), updated forward/backward propagation logic, and tuned hyperparameters (learning rate 0.10, 490 iterations) for optimized training.",
+        "Performance Insights: Extended model achieved higher accuracy (85.3% vs. 84.6%) and lower loss (0.41 vs. 0.51), with smoother convergence but ~20% increased computational cost.",
+        "Key Takeaways: Additional layers improved generalization and feature learning, but introduced trade-offs such as higher complexity and overfitting risk, suggesting need for future regularization."
+      ],
+	  tags: ["Deep Learning","Neural Networks","MNIST","Model Optimization","ReLU Activation"],
+      icon: "fa-diagram-project",
+      link: "#"
+    },
+    {
+      title: "Secure Cloud Based Healthcare DB",
+      blurb: [
+        "Project Goal – Designed a secure Database-as-a-Service (DBaaS) system for storing sensitive healthcare data in a semi-trusted cloud, balancing privacy and usability for healthcare and research stakeholders.",
+        "Security Architecture – Implemented AES-256, RSA, and Order Preserving Encryption for confidentiality; built user authentication, role-based access control, and query integrity verification mechanisms.",
+        "Implementation – Developed encrypted queries, granular access control, and range queries over encrypted weight data; ensured gender and age attributes remained inaccessible even to cloud providers.",
+        "Impact – Delivered a scalable, privacy-preserving database solution enabling secure real-time access and compliance with data protection requirements for medical records."
+      ],
+	  tags: ["Cloud Security","Database Encryption","Order Preserving Encryption","Access Control","Healthcare Data Privacy"],
+      icon: "fa-cloud",
+      link: "#"
+    },
+    {
+      title: "Customer - Order Management App",
+      blurb: [
+        "Project Goal – Built a Flask-SQLite web application to manage customer and order records, enabling centralized data storage, quick retrieval, and real-time operational insights.",
+        "Core Features – Implemented full CRUD functionality for customers and orders, integrated inventory checks, and provided search/filter options for enhanced usability.",
+        "Security & Access – Delivered secure role-based access control and ensured relational integrity with a normalized schema supporting SQL JOIN operations.",
+        "Impact – Streamlined order tracking, improved sales reporting efficiency, and supported better business decision-making with timely analytics."
+      ],
+	  tags: ["Flask","SQLite","CRUD Application","Role-Based Access Control","Sales Reporting"],
+      icon: "fa-cubes",
+      link: "#"
+    },
+    {
+      title: "Environmental Friendly Products: Consumer Survey",
+      blurb: [
+        "Research Objective: Investigated consumer awareness, perception, and purchase behavior towards eco-friendly products through structured surveys and statistical analysis.",
+        "Data Collection & Tools: Collected primary data from 150 respondents, applying SPSS for cleaning, coding, and statistical testing, including chi-square hypothesis testing.",
+        "Analysis & Insights: Identified demographic factors influencing adoption, highlighting gaps between environmental concern and actual purchase behavior.",
+        "Outcomes: Provided actionable recommendations for targeted marketing strategies to improve adoption of eco-friendly products among hesitant consumer groups."
+      ],
+	  tags: ["Market Research","Survey Analysis","SPSS","Hypothesis Testing","Consumer Behavior","Data Storytelling"],
+      icon: "fa-leaf",
+      link: "#"
+    }
+  ];
+
+  /* ---------------- SETTINGS ---------------- */
+  const PAGE_SIZE  = 3;     // 3 cards per page
+  const ROTATE_MS  = 7000;  // rotate every 7s
+  const DOT_HOTKEYS = true; // allow ←/→ keys
+
+  /* ---------------- STATE ---------------- */
+  let filtered = [...ALL_PROJECTS];
+  let page = 0;
+  let timer = null;
+
+  const $grid   = document.getElementById('projectsGrid');
+  const $dots   = document.getElementById('projectsDots');
+  const $view   = document.getElementById('projectsViewport');
+  const $search = document.getElementById('projectSearch');
+  const $prev   = document.getElementById('projPrev');
+  const $next   = document.getElementById('projNext');
+
+  const pagesCount = (list = filtered) => Math.max(1, Math.ceil(list.length / PAGE_SIZE));
+
+  function renderGrid(){
+    const start = page * PAGE_SIZE;
+    const slice = filtered.slice(start, start + PAGE_SIZE);
+    $grid.innerHTML = slice.map(cardHTML).join('');
+    requestAnimationFrame(() => { [...$grid.children].forEach(el => el.classList.add('slide-in')); });
+    renderDots();
+  }
+
+  function cardHTML(p){
+    const chips = (p.tags||[]).map(t =>
+      `<span class="px-2 py-0.5 rounded-full text-xs border border-slate-400/30 text-slate-600 dark:text-slate-300">${t}</span>`
+    ).join(' ');
+
+    const blurbHTML = Array.isArray(p.blurb)
+      ? `<ul class="list-disc pl-5 space-y-1.5">${p.blurb.map(li => `<li>${li}</li>`).join('')}</ul>`
+      : `<p>${p.blurb||""}</p>`;
+
+    return `
+      <article class="relative rounded-2xl p-6 shadow-sm
+                     bg-white/90 border border-slate-200
+                     dark:bg-slate-800 dark:border-white/10">
+        <!-- bubble icon -->
+        <div class="absolute -left-6 top-6 hidden md:block">
+          <div class="w-16 h-16 rounded-full flex items-center justify-center
+                      bg-indigo-100 text-indigo-600 ring-2 ring-indigo-200
+                      dark:bg-indigo-900/60 dark:text-indigo-300 dark:ring-indigo-400/40">
+            <i class="fa-solid ${p.icon} text-2xl"></i>
+          </div>
+        </div>
+
+        <div class="ml-0 md:ml-4 flex flex-col h-full">
+          <h3 class="text-lg font-bold text-slate-900 dark:text-white leading-snug text-center">${p.title}</h3>
+
+          <div class="mt-3 text-sm text-slate-600 dark:text-slate-300">
+            ${blurbHTML}
+          </div>
+
+          <div class="mt-4 flex flex-wrap gap-2">${chips}</div>
+
+          ${p.link ? `
+            <div class="mt-5">
+              <a href="${p.link}" target="_blank"
+                 class="inline-flex items-center gap-2 text-[13px]
+                        px-3 py-2 rounded-lg
+                        border border-indigo-200 bg-indigo-50 text-indigo-700
+                        hover:bg-indigo-100 transition
+                        dark:border-indigo-400/40 dark:bg-indigo-500/10 dark:text-indigo-300 dark:hover:bg-indigo-500/20">
+                <i class="fa-solid fa-folder-open"></i> View Project
+              </a>
+            </div>` : ``}
+        </div>
+      </article>`;
+  }
+
+  function renderDots(){
+    const count = pagesCount();
+    $dots.innerHTML = Array.from({length: count}, (_,i)=>
+      `<button class="page-dot ${i===page?'active':''}" aria-label="Go to page ${i+1}" data-i="${i}"></button>`
+    ).join('');
+    [...$dots.children].forEach(btn=>{
+      btn.addEventListener('click', ()=>{ page = +btn.dataset.i; renderGrid(); restart(); });
+    });
+  }
+
+  function nextPage(){ page = (page + 1) % pagesCount(); renderGrid(); }
+  function prevPage(){ page = (page - 1 + pagesCount()) % pagesCount(); renderGrid(); }
+
+  function start(){
+    stop();
+    if (pagesCount() > 1 && !$search.value.trim()){
+      timer = setInterval(nextPage, ROTATE_MS);
+    }
+  }
+  function stop(){ if (timer){ clearInterval(timer); timer = null; } }
+  function restart(){ stop(); start(); }
+
+  // Prev/Next buttons
+  $prev.addEventListener('click', ()=>{ stop(); prevPage(); start(); });
+  $next.addEventListener('click', ()=>{ stop(); nextPage(); start(); });
+
+  // Pause/resume on hover
+  $view.addEventListener('mouseenter', stop);
+  $view.addEventListener('mouseleave', start);
+
+  // Pause when tab not visible
+  document.addEventListener('visibilitychange', () => { document.hidden ? stop() : start(); });
+
+  // ← / → hotkeys
+  if (DOT_HOTKEYS){
+    document.addEventListener('keydown', (e)=>{
+      if (e.key === 'ArrowRight'){ stop(); nextPage(); start(); }
+      if (e.key === 'ArrowLeft'){  stop(); prevPage(); start(); }
+    });
+  }
+
+  // Debounced search (stops rotation while searching)
+  let t;
+  $search.addEventListener('input', ()=>{
+    clearTimeout(t);
+    t = setTimeout(()=>{
+      const q = $search.value.replace(/\s+/g," ").trim().toLowerCase();
+      filtered = q
+        ? ALL_PROJECTS.filter(p =>
+            p.title.toLowerCase().includes(q) ||
+            (Array.isArray(p.blurb) ? p.blurb.join(" ").toLowerCase() : (p.blurb||"").toLowerCase()).includes(q) ||
+            (p.tags||[]).some(tag => tag.toLowerCase().includes(q))
+          )
+        : [...ALL_PROJECTS];
+      page = 0;
+      renderGrid();
+      if (q) stop(); else start();
+    }, 180);
+  });
+
+  // Initial render + autorotation
+  $search.value = "";  // ensure empty so rotation runs
+  renderGrid();
+  start();
+</script>
+
+
+    <!-- Slide 3: Skills -->
+	<section id="skills" class="slide">
+  <div class="max-w-7xl mx-auto px-4">
+    <h2 class="text-3xl md:text-4xl font-extrabold section-title mb-8">Skills</h2>
+
+    <!-- 2 cols (mobile) · 3 cols (md) · 4 cols (lg) -->
+    <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6">
+      <!-- Skill tile -->
+      <div class="skill-card flex flex-col items-center justify-center text-center h-36">
+        <i class="skill-icon fa-solid fa-database text-amber-500"></i>
+        <div class="skill-title">SQL</div>
+      </div>
+	  
+	  <div class="skill-card flex flex-col items-center justify-center text-center h-36">
+        <i class="skill-icon fa-brands fa-python text-yellow-500"></i>
+        <div class="skill-title">Python</div>
+      </div>
+
+      <div class="skill-card flex flex-col items-center justify-center text-center h-36">
+        <i class="skill-icon fa-brands fa-r-project text-cyan-500"></i>
+        <div class="skill-title">R</div>
+      </div>
+	  
+	  <div class="skill-card flex flex-col items-center justify-center text-center h-36">
+        <i class="skill-icon fa-solid fa-square-poll-vertical text-lime-500"></i>
+        <div class="skill-title">Statistical Analysis</div>
+      </div>
+	  
+	  <div class="skill-card flex flex-col items-center justify-center text-center h-36">
+        <i class="skill-icon fa-solid fa-robot text-indigo-500"></i>
+        <div class="skill-title">Machine Learning</div>
+      </div>
+
+      <div class="skill-card flex flex-col items-center justify-center text-center h-36">
+        <i class="skill-icon fa-solid fa-brain text-rose-500"></i>
+        <div class="skill-title">Deep Learning</div>
+      </div>      
+
+      <div class="skill-card flex flex-col items-center justify-center text-center h-36">
+        <i class="skill-icon fa-solid fa-server text-blue-500"></i>
+        <div class="skill-title">Big Data Analytics</div>
+      </div>
+
+	  <div class="skill-card flex flex-col items-center justify-center text-center h-36">
+		<i class="skill-icon fa-brands fa-aws text-yellow-500"></i>
+		<div class="skill-title">AWS (S3, Redshift)</div>
+	  </div>      
+
+	  <div class="skill-card flex flex-col items-center justify-center text-center h-36">
+        <i class="skill-icon fa-solid fa-chart-area text-orange-500"></i>
+        <div class="skill-title">Tableau</div>
+      </div>
+	  
+      <div class="skill-card flex flex-col items-center justify-center text-center h-36">
+        <i class="skill-icon fa-solid fa-chart-pie text-amber-500"></i>
+        <div class="skill-title">Power BI</div>
+      </div>
+
+	  <div class="skill-card flex flex-col items-center justify-center text-center h-36">
+		<i class="skill-icon fa-solid fa-chalkboard-user text-teal-400"></i>
+		<div class="skill-title">Data Storytelling</div>
+	  </div>
+
+	  <div class="skill-card flex flex-col items-center justify-center text-center h-36">
+        <i class="skill-icon fa-solid fa-table-cells-large text-teal-500"></i>
+        <div class="skill-title">MS Excel</div>
+      </div>
+	  
+	  <div class="skill-card flex flex-col items-center justify-center text-center h-36">
+		<i class="skill-icon fa-solid fa-database text-blue-500"></i>
+		<div class="skill-title">SPSS</div>
+	  </div>
+
+	  <div class="skill-card flex flex-col items-center justify-center text-center h-36">
+        <i class="skill-icon fa-solid fa-code-branch text-pink-500"></i>
+        <div class="skill-title">SAS</div>
+	  </div>
+	  
+	  <div class="skill-card flex flex-col items-center justify-center text-center h-36">
+		<i class="skill-icon fa-brands fa-java text-red-500"></i>
+		<div class="skill-title">Java</div>
+	  </div>
+    </div>
+  </div>
+</section>
+
+    <!-- Slide 4: Experience -->
+<section id="experience" class="slide">
+  <div class="max-w-7xl mx-auto px-6">
+    <h2 class="text-3xl md:text-4xl font-extrabold section-title mb-10 text-center">Experience</h2>
+
+    <!-- Grid layout -->
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+
+      <!-- Card 1 -->
+      <article class="rounded-2xl p-6 shadow-sm relative
+                      bg-white/90 border border-slate-200
+                      dark:bg-slate-800 dark:border-white/10">
+        <!-- skill-style icon bubble -->
+        <div class="absolute -left-6 top-6 hidden md:block">
+          <div class="w-16 h-16 rounded-full flex items-center justify-center
+                      bg-indigo-100 text-indigo-600 ring-2 ring-indigo-200
+                      dark:bg-indigo-900/60 dark:text-indigo-300 dark:ring-indigo-400/40">
+            <i class="fa-solid fa-chart-line text-2xl"></i>
+          </div>
+        </div>
+
+        <div class="flex flex-wrap items-start justify-between gap-3 ml-0 md:ml-12">
+          <div>
+            <h3 class="text-xl font-bold text-slate-900 dark:text-white">Data Analyst Intern</h3>
+            <p class="text-sm text-slate-600 dark:text-slate-300 flex items-center gap-2">
+              <i class="fa-solid fa-building"></i> Re-VIVE
+            </p>
+          </div>
+          <span class="text-xs px-3 py-1 rounded-full
+                       border border-indigo-200 bg-indigo-50 text-indigo-700
+                       dark:border-indigo-400/40 dark:bg-indigo-500/10 dark:text-indigo-300">
+            July 2025 – Present
+          </span>
+        </div>
+        <ul class="mt-4 space-y-2 text-slate-700 dark:text-slate-300 ml-0 md:ml-12">
+          <li><span class="inline-block w-2 h-2 bg-purple-500 dark:bg-purple-400 rounded-full mr-2"></span>Improved turnaround efficiency and patient throughput by visualizing cascading delays, SLA breaches, and compliance gaps for both airline operations and ER workflows using the Re-VIVE analytics platform.</li>
+          <li><span class="inline-block w-2 h-2 bg-purple-500 dark:bg-purple-400 rounded-full mr-2"></span>Reduced process bottlenecks in flights and patient care by simulating and analyzing 100k+ airline and clinical journey records through modular SQL/Python ETL pipelines integrating operational entities.</li>
+        </ul>
+        <div class="mt-4 flex flex-wrap gap-2 ml-0 md:ml-12">
+          <span class="px-3 py-1 text-xs rounded-full border border-slate-300 text-slate-700 dark:border-slate-400/30 dark:text-slate-200">SQL</span>
+          <span class="px-3 py-1 text-xs rounded-full border border-slate-300 text-slate-700 dark:border-slate-400/30 dark:text-slate-200">Python</span>
+          <span class="px-3 py-1 text-xs rounded-full border border-slate-300 text-slate-700 dark:border-slate-400/30 dark:text-slate-200">ETL</span>
+        </div>
+      </article>
+
+      <!-- Card 2 -->
+      <article class="rounded-2xl p-6 shadow-sm relative
+                      bg-white/90 border border-slate-200
+                      dark:bg-slate-800 dark:border-white/10">
+        <!-- skill-style icon bubble -->
+        <div class="absolute -left-6 top-6 hidden md:block">
+          <div class="w-16 h-16 rounded-full flex items-center justify-center
+                      bg-indigo-100 text-indigo-600 ring-2 ring-indigo-200
+                      dark:bg-indigo-900/60 dark:text-indigo-300 dark:ring-indigo-400/40">
+            <i class="fa-solid fa-graduation-cap text-2xl"></i>
+          </div>
+        </div>
+
+        <div class="flex flex-wrap items-start justify-between gap-3 ml-0 md:ml-12">
+          <div>
+            <h3 class="text-xl font-bold text-slate-900 dark:text-white">Assistant</h3>
+            <p class="text-sm text-slate-600 dark:text-slate-300 flex items-center gap-2">
+              <i class="fa-solid fa-building-columns"></i> Kent State University
+            </p>
+          </div>
+          <span class="text-xs px-3 py-1 rounded-full
+                       border border-indigo-200 bg-indigo-50 text-indigo-700
+                       dark:border-indigo-400/40 dark:bg-indigo-500/10 dark:text-indigo-300">
+            January 2024 – May 2024
+          </span>
+        </div>
+        <ul class="mt-4 space-y-2 text-slate-700 dark:text-slate-300 ml-0 md:ml-12">
+          <li><span class="inline-block w-2 h-2 bg-purple-500 dark:bg-purple-400 rounded-full mr-2"></span>Improved tumor detection accuracy with CNN, U-Net, VGG19, and ResNet50 on 7,022 MRI scans.</li>
+          <li><span class="inline-block w-2 h-2 bg-purple-500 dark:bg-purple-400 rounded-full mr-2"></span>Boosted model precision using VGG19 depth and ResNet50 residual learning to fix vanishing gradients.</li>
+          <li><span class="inline-block w-2 h-2 bg-purple-500 dark:bg-purple-400 rounded-full mr-2"></span>Collaborated with a PhD researcher to develop and refine deep learning models for brain tumor detection and localization.</li>
+        </ul>
+        <div class="mt-4 flex flex-wrap gap-2 ml-0 md:ml-12">
+          <span class="px-3 py-1 text-xs rounded-full border border-slate-300 text-slate-700 dark:border-slate-400/30 dark:text-slate-200">Deep Learning</span>
+          <span class="px-3 py-1 text-xs rounded-full border border-slate-300 text-slate-700 dark:border-slate-400/30 dark:text-slate-200">Medical Imaging</span>
+          <span class="px-3 py-1 text-xs rounded-full border border-slate-300 text-slate-700 dark:border-slate-400/30 dark:text-slate-200">Python</span>
+        </div>
+      </article>
+
+      <!-- Card 3 -->
+      <article class="rounded-2xl p-6 shadow-sm relative
+                      bg-white/90 border border-slate-200
+                      dark:bg-slate-800 dark:border-white/10">
+        <!-- skill-style icon bubble -->
+        <div class="absolute -left-6 top-6 hidden md:block">
+          <div class="w-16 h-16 rounded-full flex items-center justify-center
+                      bg-indigo-100 text-indigo-600 ring-2 ring-indigo-200
+                      dark:bg-indigo-900/60 dark:text-indigo-300 dark:ring-indigo-400/40">
+            <i class="fa-solid fa-cloud text-2xl"></i>
+          </div>
+        </div>
+
+        <div class="flex flex-wrap items-start justify-between gap-3 ml-0 md:ml-12">
+          <div>
+            <h3 class="text-xl font-bold text-slate-900 dark:text-white">Data Mining Intern</h3>
+            <p class="text-sm text-slate-600 dark:text-slate-300 flex items-center gap-2">
+              <i class="fa-solid fa-building"></i> 360 Degree Cloud Technologies
+            </p>
+          </div>
+          <span class="text-xs px-3 py-1 rounded-full
+                       border border-indigo-200 bg-indigo-50 text-indigo-700
+                       dark:border-indigo-400/40 dark:bg-indigo-500/10 dark:text-indigo-300">
+            January 2023 – May 2023
+          </span>
+        </div>
+        <ul class="mt-4 space-y-2 text-slate-700 dark:text-slate-300 ml-0 md:ml-12">
+          <li><span class="inline-block w-2 h-2 bg-purple-500 dark:bg-purple-400 rounded-full mr-2"></span>Reduced data retrieval time by 40% with a SQL-integrated CRM dashboard combining Apollo.io and advanced Excel features.</li>
+          <li><span class="inline-block w-2 h-2 bg-purple-500 dark:bg-purple-400 rounded-full mr-2"></span>Enhanced sales/production forecasting accuracy by cleaning, joining, and transforming datasets with the database team.</li>
+          <li><span class="inline-block w-2 h-2 bg-purple-500 dark:bg-purple-400 rounded-full mr-2"></span>Automated recurring reports in Excel to streamline sales and production performance tracking.</li>
+        </ul>
+        <div class="mt-4 flex flex-wrap gap-2 ml-0 md:ml-12">
+          <span class="px-3 py-1 text-xs rounded-full border border-slate-300 text-slate-700 dark:border-slate-400/30 dark:text-slate-200">SQL</span>
+          <span class="px-3 py-1 text-xs rounded-full border border-slate-300 text-slate-700 dark:border-slate-400/30 dark:text-slate-200">Excel</span>
+          <span class="px-3 py-1 text-xs rounded-full border border-slate-300 text-slate-700 dark:border-slate-400/30 dark:text-slate-200">Forecasting</span>
+        </div>
+      </article>
+
+      <!-- Card 4 -->
+      <article class="rounded-2xl p-6 shadow-sm relative
+                      bg-white/90 border border-slate-200
+                      dark:bg-slate-800 dark:border-white/10">
+        <!-- skill-style icon bubble -->
+        <div class="absolute -left-6 top-6 hidden md:block">
+          <div class="w-16 h-16 rounded-full flex items-center justify-center
+                      bg-indigo-100 text-indigo-600 ring-2 ring-indigo-200
+                      dark:bg-indigo-900/60 dark:text-indigo-300 dark:ring-indigo-400/40">
+            <i class="fa-solid fa-magnifying-glass-chart text-2xl"></i>
+          </div>
+        </div>
+
+        <div class="flex flex-wrap items-start justify-between gap-3 ml-0 md:ml-12">
+          <div>
+            <h3 class="text-xl font-bold text-slate-900 dark:text-white">Data Research Analyst Intern</h3>
+            <p class="text-sm text-slate-600 dark:text-slate-300 flex items-center gap-2">
+              <i class="fa-solid fa-building"></i> Ace Overseas Education Consultants
+            </p>
+          </div>
+          <span class="text-xs px-3 py-1 rounded-full
+                       border border-indigo-200 bg-indigo-50 text-indigo-700
+                       dark:border-indigo-400/40 dark:bg-indigo-500/10 dark:text-indigo-300">
+            May 2021 – August 2021
+          </span>
+        </div>
+        <ul class="mt-4 space-y-2 text-slate-700 dark:text-slate-300 ml-0 md:ml-12">
+          <li><span class="inline-block w-2 h-2 bg-purple-500 dark:bg-purple-400 rounded-full mr-2"></span>Delivered comparative research on healthcare systems in India and the U.S, producing insights to guide improvements.</li>
+          <li><span class="inline-block w-2 h-2 bg-purple-500 dark:bg-purple-400 rounded-full mr-2"></span>Researched ASHA guidelines and synthesized findings into recommendations for mental health summit planning.</li>
+          <li><span class="inline-block w-2 h-2 bg-purple-500 dark:bg-purple-400 rounded-full mr-2"></span>Compiled and presented research findings in Excel and Google Sheets reports for strategic decision-making.</li>
+        </ul>
+        <div class="mt-4 flex flex-wrap gap-2 ml-0 md:ml-12">
+          <span class="px-3 py-1 text-xs rounded-full border border-slate-300 text-slate-700 dark:border-slate-400/30 dark:text-slate-200">Research</span>
+          <span class="px-3 py-1 text-xs rounded-full border border-slate-300 text-slate-700 dark:border-slate-400/30 dark:text-slate-200">Excel</span>
+          <span class="px-3 py-1 text-xs rounded-full border border-slate-300 text-slate-700 dark:border-slate-400/30 dark:text-slate-200">Google Sheets</span>
+        </div>
+      </article>
+
+    </div>
+  </div>
+</section>
+
+<!-- Slide 5: Education -->
+<section id="education" class="slide">
+  <div class="max-w-6xl mx-auto px-6">
+    <h2 class="text-3xl md:text-4xl font-extrabold section-title mb-10 text-center">Education</h2>
+
+    <div class="relative">
+      <!-- center spine -->
+      <div class="hidden md:block absolute left-1/2 top-0 bottom-0 w-px
+                  bg-slate-300 dark:bg-slate-500/30 -translate-x-1/2"></div>
+
+      <!-- Item 1 (right card) -->
+      <div class="relative md:grid md:grid-cols-2 md:gap-10 items-start mb-10">
+        <!-- date left -->
+        <div class="hidden md:flex items-start justify-end pr-6">
+          <p class="text-sm text-slate-600 dark:text-slate-400">August 2023 – May 2025</p>
+        </div>
+        <!-- purple dot -->
+        <span class="hidden md:block absolute left-1/2 -translate-x-1/2 top-2 w-3 h-3 rounded-full
+                     bg-purple-500 ring-4 ring-purple-200
+                     dark:bg-purple-400 dark:ring-purple-400/20"></span>
+        <!-- card right -->
+        <div class="rounded-xl p-6 shadow-sm
+                    bg-white/90 border border-slate-200
+                    dark:bg-slate-800 dark:border-white/10">
+          <h3 class="text-lg font-bold text-slate-900 dark:text-white">Master of Science: Data Science</h3>
+          <p class="text-slate-600 dark:text-slate-300">Kent State University, United States</p>
+          <p class="text-sm mt-1 text-slate-700 dark:text-slate-300">
+            <span class="font-semibold text-slate-900 dark:text-white">GPA:</span> 3.64/4
+          </p>
+          <p class="mt-3 text-sm text-slate-700 dark:text-slate-300/90">
+            <span class="font-semibold text-slate-900 dark:text-white">Relevant Coursework:</span>
+            Data Mining, Machine Learning, Big Data Analytics, Data Visualization, Natural Language Processing.
+          </p>
+        </div>
+      </div>
+
+      <!-- Item 2 (left card) -->
+      <div class="relative md:grid md:grid-cols-2 md:gap-10 items-start mb-10">
+        <!-- card left -->
+        <div class="rounded-xl p-6 shadow-sm md:col-start-1
+                    bg-white/90 border border-slate-200
+                    dark:bg-slate-800 dark:border-white/10">
+          <h3 class="text-lg font-bold text-slate-900 dark:text-white">Master of Science: Applied Statistics</h3>
+          <p class="text-slate-600 dark:text-slate-300">Osmania University, Hyderabad</p>
+          <p class="text-sm mt-1 text-slate-700 dark:text-slate-300">
+            <span class="font-semibold text-slate-900 dark:text-white">GPA:</span> 3.21/4
+          </p>
+          <p class="mt-3 text-sm text-slate-700 dark:text-slate-300/90">
+            <span class="font-semibold text-slate-900 dark:text-white">Relevant Coursework:</span>
+            Statistical Inference, Applied Regression, Design of Experiments, Forecasting Models, Data Modeling using Machine Learning Techniques.
+          </p>
+        </div>
+        <!-- purple dot -->
+        <span class="hidden md:block absolute left-1/2 -translate-x-1/2 top-2 w-3 h-3 rounded-full
+                     bg-purple-500 ring-4 ring-purple-200
+                     dark:bg-purple-400 dark:ring-purple-400/20"></span>
+        <!-- date right -->
+        <div class="hidden md:flex items-start pl-6">
+          <p class="text-sm text-slate-600 dark:text-slate-400">December 2020 – October 2022</p>
+        </div>
+      </div>
+
+      <!-- Item 3 (right card) -->
+      <div class="relative md:grid md:grid-cols-2 md:gap-10 items-start">
+        <!-- date left -->
+        <div class="hidden md:flex items-start justify-end pr-6">
+          <p class="text-sm text-slate-600 dark:text-slate-400">June 2017 – September 2020</p>
+        </div>
+        <!-- purple dot -->
+        <span class="hidden md:block absolute left-1/2 -translate-x-1/2 top-2 w-3 h-3 rounded-full
+                     bg-purple-500 ring-4 ring-purple-200
+                     dark:bg-purple-400 dark:ring-purple-400/20"></span>
+        <!-- card right -->
+        <div class="rounded-xl p-6 shadow-sm
+                    bg-white/90 border border-slate-200
+                    dark:bg-slate-800 dark:border-white/10">
+          <h3 class="text-lg font-bold text-slate-900 dark:text-white">
+            Bachelor of Science: Mathematics, Statistics, Computer Science
+          </h3>
+          <p class="text-slate-600 dark:text-slate-300">Osmania University, Hyderabad</p>
+          <p class="text-sm mt-1 text-slate-700 dark:text-slate-300">
+            <span class="font-semibold text-slate-900 dark:text-white">GPA:</span> 3.63/4
+          </p>
+          <p class="mt-3 text-sm text-slate-700 dark:text-slate-300/90">
+            <span class="font-semibold text-slate-900 dark:text-white">Relevant Coursework:</span>
+            Probability, Applied Statistics, Linear Algebra, Data Structures, Relational Database Management Systems.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Slide 6: Certifications -->
+<section id="certifications" class="slide">
+  <!-- full-height column layout so footer stays at the bottom -->
+  <div class="max-w-7xl mx-auto px-6 h-full flex flex-col justify-between">
+    
+    <!-- content -->
+    <div class="grow">
+      <h2 class="text-3xl md:text-4xl font-extrabold section-title mb-10 text-center">Certifications</h2>
+
+      <!-- Grid layout -->
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+
+        <!-- IBM -->
+        <article class="rounded-2xl p-6 shadow-sm relative bg-white/90 border border-slate-200 dark:bg-slate-800 dark:border-white/10">
+          <div class="absolute -left-6 top-6 hidden md:block">
+            <div class="w-16 h-16 rounded-full flex items-center justify-center bg-indigo-100 text-indigo-600 ring-2 ring-indigo-200 dark:bg-indigo-900/60 dark:text-indigo-300 dark:ring-indigo-400/40">
+              <i class="fa-solid fa-certificate text-2xl"></i>
+            </div>
+          </div>
+          <div class="ml-0 md:ml-12">
+            <h3 class="text-xl font-bold text-slate-900 dark:text-white">IBM Data Science Professional Certificate</h3>
+            <p class="text-sm text-slate-600 dark:text-slate-300">IBM iX · Issued Jan 2025</p>
+            <div class="mt-3">
+              <a href="certificates/ibm_data_science.pdf" target="_blank"
+                 class="px-3 py-1 text-xs rounded-full border border-indigo-200 bg-indigo-50 text-indigo-700 hover:bg-indigo-100 transition dark:border-indigo-400/40 dark:bg-indigo-500/10 dark:text-indigo-300 dark:hover:bg-indigo-500/20">
+                View Certificate
+              </a>
+            </div>
+            <div class="mt-4 flex flex-wrap gap-2">
+              <span class="px-3 py-1 text-xs rounded-full border border-slate-300 dark:border-slate-400/30 dark:text-slate-200">Python</span>
+              <span class="px-3 py-1 text-xs rounded-full border border-slate-300 dark:border-slate-400/30 dark:text-slate-200">SQL</span>
+              <span class="px-3 py-1 text-xs rounded-full border border-slate-300 dark:border-slate-400/30 dark:text-slate-200">Machine Learning</span>
+              <span class="px-3 py-1 text-xs rounded-full border border-slate-300 dark:border-slate-400/30 dark:text-slate-200">Data Visualization</span>
+              <span class="px-3 py-1 text-xs rounded-full border border-slate-300 dark:border-slate-400/30 dark:text-slate-200">Data Analysis</span>
+            </div>
+          </div>
+        </article>
+
+        <!-- Cisco Intro to DS -->
+        <article class="rounded-2xl p-6 shadow-sm relative bg-white/90 border border-slate-200 dark:bg-slate-800 dark:border-white/10">
+          <div class="absolute -left-6 top-6 hidden md:block">
+            <div class="w-16 h-16 rounded-full flex items-center justify-center bg-indigo-100 text-indigo-600 ring-2 ring-indigo-200 dark:bg-indigo-900/60 dark:text-indigo-300 dark:ring-indigo-400/40">
+              <i class="fa-solid fa-database text-2xl"></i>
+            </div>
+          </div>
+          <div class="ml-0 md:ml-12">
+            <h3 class="text-xl font-bold text-slate-900 dark:text-white">Introduction to Data Science</h3>
+            <p class="text-sm text-slate-600 dark:text-slate-300">Cisco · Issued Aug 2024</p>
+            <div class="mt-3">
+              <a href="certificates/intro_to_data_science.pdf" target="_blank"
+                 class="px-3 py-1 text-xs rounded-full border border-indigo-200 bg-indigo-50 text-indigo-700 hover:bg-indigo-100 transition dark:border-indigo-400/40 dark:bg-indigo-500/10 dark:text-indigo-300 dark:hover:bg-indigo-500/20">
+                View Certificate
+              </a>
+            </div>
+            <div class="mt-4 flex flex-wrap gap-2">
+              <span class="px-3 py-1 text-xs rounded-full border border-slate-300 dark:border-slate-400/30 dark:text-slate-200">Data Analytics</span>
+              <span class="px-3 py-1 text-xs rounded-full border border-slate-300 dark:border-slate-400/30 dark:text-slate-200">AI</span>
+              <span class="px-3 py-1 text-xs rounded-full border border-slate-300 dark:border-slate-400/30 dark:text-slate-200">Machine Learning</span>
+              <span class="px-3 py-1 text-xs rounded-full border border-slate-300 dark:border-slate-400/30 dark:text-slate-200">DS Fundamentals</span>
+              <span class="px-3 py-1 text-xs rounded-full border border-slate-300 dark:border-slate-400/30 dark:text-slate-200">Career Development</span>
+            </div>
+          </div>
+        </article>
+
+        <!-- Google AI Essentials -->
+        <article class="rounded-2xl p-6 shadow-sm relative bg-white/90 border border-slate-200 dark:bg-slate-800 dark:border-white/10">
+          <div class="absolute -left-6 top-6 hidden md:block">
+            <div class="w-16 h-16 rounded-full flex items-center justify-center bg-indigo-100 text-indigo-600 ring-2 ring-indigo-200 dark:bg-indigo-900/60 dark:text-indigo-300 dark:ring-indigo-400/40">
+              <i class="fa-solid fa-robot text-2xl"></i>
+            </div>
+          </div>
+          <div class="ml-0 md:ml-12">
+            <h3 class="text-xl font-bold text-slate-900 dark:text-white">Google AI Essentials</h3>
+            <p class="text-sm text-slate-600 dark:text-slate-300">Coursera · Issued Jul 2024</p>
+            <div class="mt-3">
+              <a href="certificates/google_ai.pdf" target="_blank"
+                 class="px-3 py-1 text-xs rounded-full border border-indigo-200 bg-indigo-50 text-indigo-700 hover:bg-indigo-100 transition dark:border-indigo-400/40 dark:bg-indigo-500/10 dark:text-indigo-300 dark:hover:bg-indigo-500/20">
+                View Certificate
+              </a>
+            </div>
+            <div class="mt-4 flex flex-wrap gap-2">
+              <span class="px-3 py-1 text-xs rounded-full border border-slate-300 dark:border-slate-400/30 dark:text-slate-200">Generative AI</span>
+              <span class="px-3 py-1 text-xs rounded-full border border-slate-300 dark:border-slate-400/30 dark:text-slate-200">Prompt Engineering</span>
+              <span class="px-3 py-1 text-xs rounded-full border border-slate-300 dark:border-slate-400/30 dark:text-slate-200">Machine Learning</span>
+              <span class="px-3 py-1 text-xs rounded-full border border-slate-300 dark:border-slate-400/30 dark:text-slate-200">Data Ethics</span>
+              <span class="px-3 py-1 text-xs rounded-full border border-slate-300 dark:border-slate-400/30 dark:text-slate-200">Innovation</span>
+            </div>
+          </div>
+        </article>
+
+        <!-- Google Data Analytics -->
+        <article class="rounded-2xl p-6 shadow-sm relative bg-white/90 border border-slate-200 dark:bg-slate-800 dark:border-white/10">
+          <div class="absolute -left-6 top-6 hidden md:block">
+            <div class="w-16 h-16 rounded-full flex items-center justify-center bg-indigo-100 text-indigo-600 ring-2 ring-indigo-200 dark:bg-indigo-900/60 dark:text-indigo-300 dark:ring-indigo-400/40">
+              <i class="fa-solid fa-chart-line text-2xl"></i>
+            </div>
+          </div>
+          <div class="ml-0 md:ml-12">
+            <h3 class="text-xl font-bold text-slate-900 dark:text-white">Google Data Analytics</h3>
+            <p class="text-sm text-slate-600 dark:text-slate-300">Coursera · Issued Jan 2025</p>
+            <div class="mt-3">
+              <a href="certificates/google_data_analytics.pdf" target="_blank"
+                 class="px-3 py-1 text-xs rounded-full border border-indigo-200 bg-indigo-50 text-indigo-700 hover:bg-indigo-100 transition dark:border-indigo-400/40 dark:bg-indigo-500/10 dark:text-indigo-300 dark:hover:bg-indigo-500/20">
+                View Certificate
+              </a>
+            </div>
+            <div class="mt-4 flex flex-wrap gap-2">
+              <span class="px-3 py-1 text-xs rounded-full border border-slate-300 dark:border-slate-400/30 dark:text-slate-200">Data Cleaning</span>
+              <span class="px-3 py-1 text-xs rounded-full border border-slate-300 dark:border-slate-400/30 dark:text-slate-200">SQL</span>
+              <span class="px-3 py-1 text-xs rounded-full border border-slate-300 dark:border-slate-400/30 dark:text-slate-200">R Programming</span>
+              <span class="px-3 py-1 text-xs rounded-full border border-slate-300 dark:border-slate-400/30 dark:text-slate-200">Data Visualization</span>
+              <span class="px-3 py-1 text-xs rounded-full border border-slate-300 dark:border-slate-400/30 dark:text-slate-200">Data Storytelling</span>
+            </div>
+          </div>
+        </article>
+
+        <!-- Udemy ML/DS Bootcamp (full width on large screens) -->
+        <article class="rounded-2xl p-6 shadow-sm relative bg-white/90 border border-slate-200 dark:bg-slate-800 dark:border-white/10 lg:col-span-2">
+          <div class="absolute -left-6 top-6 hidden md:block">
+            <div class="w-16 h-16 rounded-full flex items-center justify-center bg-indigo-100 text-indigo-600 ring-2 ring-indigo-200 dark:bg-indigo-900/60 dark:text-indigo-300 dark:ring-indigo-400/40">
+              <i class="fa-solid fa-brain text-2xl"></i>
+            </div>
+          </div>
+          <div class="ml-0 md:ml-12">
+            <h3 class="text-xl font-bold text-slate-900 dark:text-white">Complete AI &amp; Machine Learning, Data Science Bootcamp</h3>
+            <p class="text-sm text-slate-600 dark:text-slate-300">Udemy · Issued Jun 2024</p>
+            <div class="mt-3">
+              <a href="certificates/complete_ai_ml_ds.pdf" target="_blank"
+                 class="px-3 py-1 text-xs rounded-full border border-indigo-200 bg-indigo-50 text-indigo-700 hover:bg-indigo-100 transition dark:border-indigo-400/40 dark:bg-indigo-500/10 dark:text-indigo-300 dark:hover:bg-indigo-500/20">
+                View Certificate
+              </a>
+            </div>
+            <div class="mt-4 flex flex-wrap gap-2">
+              <span class="px-3 py-1 text-xs rounded-full border border-slate-300 dark:border-slate-400/30 dark:text-slate-200">Python</span>
+              <span class="px-3 py-1 text-xs rounded-full border border-slate-300 dark:border-slate-400/30 dark:text-slate-200">Machine Learning</span>
+              <span class="px-3 py-1 text-xs rounded-full border border-slate-300 dark:border-slate-400/30 dark:text-slate-200">Deep Learning</span>
+              <span class="px-3 py-1 text-xs rounded-full border border-slate-300 dark:border-slate-400/30 dark:text-slate-200">Data Visualization</span>
+              <span class="px-3 py-1 text-xs rounded-full border border-slate-300 dark:border-slate-400/30 dark:text-slate-200">Data Engineering</span>
+            </div>
+          </div>
+        </article>
+
+      </div>
+    </div>
+
+    <!-- footer at bottom of this slide -->
+    <footer class="mt-8 py-4 text-center text-sm text-slate-500 dark:text-slate-400">
+      © 2025 Priyanka Gannavarapu. All Rights Reserved.
+    </footer>
+
+  </div>
+</section>
+
+
+  <script>
+	// Theme init + toggle with icon swap
+	(function(){
+		const html = document.documentElement;
+		const btn  = document.getElementById('themeToggle');
+		const sun  = document.getElementById('icon-sun');
+		const moon = document.getElementById('icon-moon');
+
+		const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+		const saved = localStorage.getItem('theme');
+		const start = saved || (prefersDark ? 'dark' : 'light');
+
+		function apply(theme){
+			if(theme === 'dark'){
+				html.classList.add('dark');
+				sun.classList.remove('hidden');
+				moon.classList.add('hidden');
+			} else {
+				html.classList.remove('dark');
+				sun.classList.add('hidden');
+				moon.classList.remove('hidden');
+			}
+			localStorage.setItem('theme', theme);
+		}
+		apply(start);
+
+		btn.addEventListener('click', () => {
+			apply(html.classList.contains('dark') ? 'light' : 'dark');
+		});
+	})();
+</script>
+
+<script>
+  // Typewriter effect
+  const tw = new Typewriter(document.getElementById('typewriter'), { loop:true, delay:60 });
+  tw.typeString('Data Analyst').pauseFor(1200).deleteAll()
+    .typeString('Data Scientist').pauseFor(1200).deleteAll()
+    .typeString('Data Engineer').pauseFor(1200).deleteAll()
+    .typeString('Machine Learning Engineer').pauseFor(1200).start();
+</script>
+   <script>
+  // ===== Slides / Nav =====
+  const scroller = document.getElementById('slides');
+  const slides   = Array.from(document.querySelectorAll('.slide'));
+  const dots     = Array.from(document.querySelectorAll('.dot'));
+
+  // track active slide reliably
+  let active = 0;
+
+  function setActive(i){
+    active = Math.max(0, Math.min(i, slides.length - 1));
+    dots.forEach((d, j) => d.classList.toggle('active', j === active));
+    history.replaceState(null, '', '#' + slides[active].id);
+  }
+
+  function go(i){
+    setActive(i);
+    // scroll inside the slides container
+    const top = slides[active].offsetTop;
+    scroller.scrollTo({ top, behavior: 'smooth' });
+  }
+
+  // init (from hash if present)
+  const startId = (location.hash || '#home').slice(1);
+  const startIx = Math.max(0, slides.findIndex(s => s.id === startId));
+  setActive(startIx);
+  // ensure we start at the right slide
+  scroller.scrollTo({ top: slides[active].offsetTop });
+
+  // dots click
+  dots.forEach(d => d.addEventListener('click', () => {
+    const idx = slides.findIndex(s => s.id === d.dataset.goto);
+    if (idx !== -1) go(idx);
+  }));
+
+  // arrows
+  document.getElementById('prev').addEventListener('click', (e) => { e.preventDefault(); go(active - 1); });
+  document.getElementById('next').addEventListener('click', (e) => { e.preventDefault(); go(active + 1); });
+
+  // keyboard
+  window.addEventListener('keydown', (e) => {
+    if (['ArrowDown','PageDown',' '].includes(e.key)) { e.preventDefault(); go(active + 1); }
+    if (['ArrowUp','PageUp'].includes(e.key))        { e.preventDefault(); go(active - 1); }
+  });
+
+  // keep active in sync when user scrolls manually
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        const idx = slides.findIndex(s => s.id === entry.target.id);
+        if (idx !== -1) setActive(idx);
+      }
+    });
+  }, { root: scroller, threshold: 0.55 });
+
+  slides.forEach(s => io.observe(s));
+</script>
+</body>
+</html>
